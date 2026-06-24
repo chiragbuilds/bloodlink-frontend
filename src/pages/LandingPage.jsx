@@ -22,7 +22,7 @@ const LandingPage = () => {
         setStats({
           donors: data.donors || data.totalDonors || 142,
           hospitals: data.hospitals || data.totalHospitals || 18,
-          bloodbanks: data.bloodbanks || data.totalBloodbanks || 12,
+          bloodbanks: data.bloodbanks || data.totalBloodBank || 12,
           pendingRequests: data.pendingRequests || data.activeRequests || 29,
         });
       } catch (error) {
