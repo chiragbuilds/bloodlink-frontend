@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import api from '../services/api';
 import GlassCard from '../components/GlassCard';
 import { Heart, ShieldCheck, Activity, Users, Building, Database } from 'lucide-react';
+import Footer from '../components/Footer';
 
 const LandingPage = () => {
   const [stats, setStats] = useState({
@@ -23,7 +24,7 @@ const LandingPage = () => {
           donors: data.donors || data.totalDonors || 142,
           hospitals: data.hospitals || data.totalHospitals || 18,
           bloodbanks: data.bloodbanks || data.totalBloodBank || 12,
-          pendingRequests: data.pendingRequests || data.activeRequests || 29,
+          pendingRequests: data.pendingRequests || data.totalRequests || 29,
         });
       } catch (error) {
         console.error('Failed to load stats, using placeholder metrics:', error);
@@ -83,8 +84,8 @@ const LandingPage = () => {
             textTransform: 'uppercase',
             marginBottom: '24px'
           }}>
-            <Activity size={14} className="animate-fade-in" style={{ animation: 'spin 3s linear infinite' }} />
-            The High-Tech Hematology Network
+            <Activity size={14} className="animate-fade-in"  />
+            Connecting Hope With Care
           </div>
           
           <h1 className="display-lg" style={{ color: 'var(--secondary)', marginBottom: '24px' }}>
@@ -97,17 +98,16 @@ const LandingPage = () => {
           </h1>
 
           <p className="body-lg" style={{ color: '#5b6a7e', marginBottom: '40px', maxWidth: '700px', marginInline: 'auto' }}>
-            BloodLink is a real-time smart logistics platform designed for emergency transfusion centers. 
-            We sync patient blood demands directly with donor pools and certified laboratory inventory.
+            A high-tech lifeline seamlessly connecting hospitals, blood banks, and donors to ensure life-saving resources are always where they need to be.
           </p>
 
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/register" className="btn btn-primary" style={{ padding: '14px 32px', fontSize: '1rem' }}>
-              Register as Donor
+            <Link to="/register" className="btn btn-glass" style={{ padding: '14px 32px', fontSize: '1rem', border: '2px solid var(--secondary)', fontWeight: 600 }}>
+              Connect with BloodLink
             </Link>
-            <Link to="/login" className="btn btn-secondary" style={{ padding: '14px 32px', fontSize: '1rem' }}>
+            {/* <Link to="/login" className="btn btn-secondary" style={{ padding: '14px 32px', fontSize: '1rem' }}>
               Access Dashboard
-            </Link>
+            </Link> */}
           </div>
         </div>
       </section>
@@ -145,7 +145,7 @@ const LandingPage = () => {
               <h3 style={{ fontSize: '2rem', marginBottom: '8px', color: 'var(--primary)' }}>
                 {loading ? '...' : stats.pendingRequests}
               </h3>
-              <p className="label-sm" style={{ color: '#8fa0b5' }}>Urgent Requests Resolved</p>
+              <p className="label-sm" style={{ color: '#8fa0b5' }}>Requests Resolved</p>
             </GlassCard>
           </div>
         </div>
@@ -229,6 +229,7 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+      <Footer />
     </div>
   );
 };
