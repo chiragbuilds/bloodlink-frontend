@@ -99,14 +99,14 @@ const Login = () => {
         {/* Role Tab Selector */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
+          gridTemplateColumns: 'repeat(3, 1fr)',
           gap: '4px',
           backgroundColor: '#edf2f4',
           padding: '4px',
           borderRadius: 'var(--radius-default)',
           marginBottom: '24px'
         }}>
-          {['donor', 'hospital', 'bloodbank', 'admin'].map((role) => (
+          {['donor', 'hospital', 'bloodbank'].map((role) => (
             <button
               key={role}
               onClick={() => handleRoleChange(role)}

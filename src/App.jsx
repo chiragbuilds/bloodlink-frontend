@@ -11,6 +11,7 @@ import DonorDashboard from './pages/donor/DonorDashboard';
 import HospitalDashboard from './pages/hospital/HospitalDashboard';
 import BloodBankDashboard from './pages/bloodbank/BloodBankDashboard';
 import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminLogin from './pages/admin/AdminLogin';
 
 const AppContent = () => {
   const { isAuthenticated } = useAuth();
@@ -107,6 +108,8 @@ const AppContent = () => {
         } />
 
         {/* Protected Global Admin Workspace */}
+        <Route path="/adminLogin" element={<AdminLogin />} />
+
         <Route path="/admin-dashboard" element={
           <ProtectedRoute allowedRoles={['admin']}>
             <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
