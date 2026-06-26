@@ -401,7 +401,7 @@ const BloodBankDashboard = ({ activeTab }) => {
                     return (
                       <tr key={req._id || req.id} style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.05)', fontSize: '0.95rem' }}>
                         <td data-label="Requesting Center" style={{ padding: '16px' }}>
-                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'right' }}>
                             <span style={{ fontWeight: 600, color: 'var(--secondary)' }}>
                               {req.hospitalId?.name || req.hospitalName || 'Hospital Center'}
                             </span>
@@ -487,10 +487,12 @@ const BloodBankDashboard = ({ activeTab }) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {acceptedRequests.map((req) => (
+                  {acceptedRequests
+                  .sort((a, b) => (a.status === "accepted" ? -1 : 1))
+                  .map((req) => (
                     <tr key={req._id || req.id} style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.05)', fontSize: '0.95rem' }}>
                       <td data-label="Destination Center" style={{ padding: '16px' }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', textAlign: 'right' }}>
                           <span style={{ fontWeight: 600, color: 'var(--secondary)' }}>
                             {req.hospitalId?.name || req.hospitalName || 'Hospital Center'}
                           </span>
