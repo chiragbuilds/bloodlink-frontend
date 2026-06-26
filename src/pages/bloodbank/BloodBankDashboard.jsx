@@ -514,7 +514,7 @@ const BloodBankDashboard = ({ activeTab }) => {
                       <td data-label="Action" style={{ padding: '16px' }}>
                         <button
                           onClick={() => handleCompleteRequest(req._id || req.id)}
-                          disabled={isSubmitting}
+                          disabled={isSubmitting || req.status !== 'accepted'}
                           className="btn btn-primary"
                           style={{ 
                             padding: '8px 16px', 
@@ -526,7 +526,7 @@ const BloodBankDashboard = ({ activeTab }) => {
                           }}
                         >
                           <CheckCircle2 size={14} />
-                          <span>Confirm Delivery</span>
+                          <span>{ (isSubmitting || req.status === 'accepted') ? 'Confirm Delivery' : 'Delivered'}</span>
                         </button>
                       </td>
                     </tr>
