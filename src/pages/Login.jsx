@@ -86,7 +86,7 @@ const Login = () => {
         zIndex: -1
       }} />
 
-      <GlassCard style={{ width: '100%', maxWidth: '480px', padding: '40px 32px' }} className="animate-slide-up">
+      <GlassCard className="auth-card login-card animate-slide-up">
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <h2 style={{ fontFamily: 'var(--font-display)', color: 'var(--secondary)', marginBottom: '8px' }}>
             Account Sign In
@@ -97,35 +97,12 @@ const Login = () => {
         </div>
 
         {/* Role Tab Selector */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '4px',
-          backgroundColor: '#edf2f4',
-          padding: '4px',
-          borderRadius: 'var(--radius-default)',
-          marginBottom: '24px'
-        }}>
+        <div className="role-picker-grid">
           {['donor', 'hospital', 'bloodbank'].map((role) => (
             <button
               key={role}
               onClick={() => handleRoleChange(role)}
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '4px',
-                padding: '10px 4px',
-                border: 'none',
-                background: selectedRole === role ? '#ffffff' : 'transparent',
-                color: selectedRole === role ? 'var(--secondary)' : '#8fa0b5',
-                borderRadius: 'calc(var(--radius-default) - 2px)',
-                cursor: 'pointer',
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                transition: 'all var(--transition-fast)'
-              }}
+              className={selectedRole === role ? 'role-picker-btn active' : 'role-picker-btn'}
             >
               {getRoleIcon(role)}
               <span>{role === 'bloodbank' ? 'Bank' : role}</span>

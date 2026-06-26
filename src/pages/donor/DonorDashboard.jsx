@@ -410,8 +410,8 @@ const DonorDashboard = ({ activeTab }) => {
               <p>No matching active requests found in your area at this time.</p>
             </div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <div className="table-container">
+              <table className="responsive-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.1)', color: 'var(--secondary)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
                     <th style={{ padding: '12px 16px' }}>Requester</th>
@@ -424,24 +424,26 @@ const DonorDashboard = ({ activeTab }) => {
                 <tbody>
                   {requests.map((req) => (
                     <tr key={req._id || req.id} style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.05)', fontSize: '0.95rem' }}>
-                      <td style={{ padding: '16px' }}>
-                        <span style={{ fontWeight: 600, color: 'var(--secondary)' }}>
-                          {req.hospitalId?.hospitalName || req.hospitalName || 'Hospital Center'}
-                        </span>
-                        <div style={{ fontSize: '0.8rem', color: '#8fa0b5' }}>
-                          {req.hospitalId?.address || req.location || req.city || 'Network Location'}
+                      <td data-label="Requester" style={{ padding: '16px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right' }}>
+                          <span style={{ fontWeight: 600, color: 'var(--secondary)' }}>
+                            {req.hospitalId?.hospitalName || req.hospitalName || 'Hospital Center'}
+                          </span>
+                          <div style={{ fontSize: '0.8rem', color: '#8fa0b5' }}>
+                            {req.hospitalId?.address || req.location || req.city || 'Network Location'}
+                          </div>
                         </div>
                       </td>
-                      <td style={{ padding: '16px', fontWeight: 700, color: 'var(--primary)' }}>
+                      <td data-label="Blood Group" style={{ padding: '16px', fontWeight: 700, color: 'var(--primary)' }}>
                         {req.bloodGroup}
                       </td>
-                      <td style={{ padding: '16px' }}>{req.unitsRequired || req.units} Units</td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Requested Units" style={{ padding: '16px' }}>{req.unitsRequired || req.units} Units</td>
+                      <td data-label="Priority" style={{ padding: '16px' }}>
                         <span className={`status-chip ${req.priority === 'critical' || req.urgency === 'Critical' ? 'status-chip-critical' : 'status-chip-pending'}`}>
                           {req.priority || req.urgency || 'Normal'}
                         </span>
                       </td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Status" style={{ padding: '16px' }}>
                         <span className={`status-chip ${req.status === 'Completed' || req.status === 'completed' ? 'status-chip-active' : 'status-chip-info'}`}>
                           {req.status}
                         </span>

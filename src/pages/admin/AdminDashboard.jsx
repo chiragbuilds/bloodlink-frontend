@@ -215,8 +215,8 @@ const AdminDashboard = ({ activeTab }) => {
               <p>No donors registered in the database.</p>
             </div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <div className="table-container">
+              <table className="responsive-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.1)', color: 'var(--secondary)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
                     <th style={{ padding: '12px 16px' }}>Name</th>
@@ -231,25 +231,25 @@ const AdminDashboard = ({ activeTab }) => {
                 <tbody>
                   {donors.map((donor) => (
                     <tr key={donor._id || donor.id} style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.05)', fontSize: '0.95rem' }}>
-                      <td style={{ padding: '16px', fontWeight: 600, color: 'var(--secondary)' }}>
+                      <td data-label="Name" style={{ padding: '16px', fontWeight: 600, color: 'var(--secondary)' }}>
                         {donor.name || 'Anonymous Donor'}
                       </td>
-                      <td style={{ padding: '16px' }}>{donor.email}</td>
-                      <td style={{ padding: '16px', fontWeight: 700, color: 'var(--primary)' }}>
+                      <td data-label="Email" style={{ padding: '16px' }}>{donor.email}</td>
+                      <td data-label="Blood Group" style={{ padding: '16px', fontWeight: 700, color: 'var(--primary)' }}>
                         {donor.bloodGroup}
                       </td>
-                      <td style={{ padding: '16px', color: '#5b6a7e' }}>
+                      <td data-label="Phone" style={{ padding: '16px', color: '#5b6a7e' }}>
                         {donor.phone}
                       </td>
-                      <td style={{ padding: '16px', color: '#5b6a7e' }}>
+                      <td data-label="City" style={{ padding: '16px', color: '#5b6a7e' }}>
                         {donor.city || '-'}
                       </td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Status" style={{ padding: '16px' }}>
                         <span className={`status-chip ${donor.verified ? 'status-chip-active' : 'status-chip-pending'}`}>
                           {donor.verified ? 'Verified' : 'Pending'}
                         </span>
                       </td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Action" style={{ padding: '16px' }}>
                         {!donor.verified ? (
                           <button
                             onClick={() => handleVerify('donor', donor._id || donor.id)}
@@ -288,8 +288,8 @@ const AdminDashboard = ({ activeTab }) => {
               <p>No hospitals registered in the database.</p>
             </div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <div className="table-container">
+              <table className="responsive-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.1)', color: 'var(--secondary)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
                     <th style={{ padding: '12px 16px' }}>Hospital Name</th>
@@ -304,21 +304,21 @@ const AdminDashboard = ({ activeTab }) => {
                 <tbody>
                   {hospitals.map((hosp) => (
                     <tr key={hosp._id || hosp.id} style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.05)', fontSize: '0.95rem' }}>
-                      <td style={{ padding: '16px', fontWeight: 600, color: 'var(--secondary)' }}>
+                      <td data-label="Hospital Name" style={{ padding: '16px', fontWeight: 600, color: 'var(--secondary)' }}>
                         {hosp.name || 'Clinical Center'}
                       </td>
-                      <td style={{ padding: '16px' }}>{hosp.email}</td>
-                      <td style={{ padding: '16px', color: '#5b6a7e', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      <td data-label="Email" style={{ padding: '16px' }}>{hosp.email}</td>
+                      <td data-label="Address" style={{ padding: '16px', color: '#5b6a7e', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {hosp.address}
                       </td>
-                      <td style={{ padding: '16px' }}>{hosp.phone}</td>
-                      <td style={{ padding: '16px', color: '#5b6a7e' }}>{hosp.city}</td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Contact Phone" style={{ padding: '16px' }}>{hosp.phone}</td>
+                      <td data-label="City" style={{ padding: '16px', color: '#5b6a7e' }}>{hosp.city}</td>
+                      <td data-label="Status" style={{ padding: '16px' }}>
                         <span className={`status-chip ${hosp.verified ? 'status-chip-active' : 'status-chip-pending'}`}>
                           {hosp.verified ? 'Verified' : 'Pending'}
                         </span>
                       </td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Action" style={{ padding: '16px' }}>
                         {!hosp.verified ? (
                           <button
                             onClick={() => handleVerify('hospital', hosp._id || hosp.id)}
@@ -357,8 +357,8 @@ const AdminDashboard = ({ activeTab }) => {
               <p>No blood banks registered in the database.</p>
             </div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <div className="table-container">
+              <table className="responsive-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.1)', color: 'var(--secondary)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
                     <th style={{ padding: '12px 16px' }}>Bank Name</th>
@@ -373,21 +373,21 @@ const AdminDashboard = ({ activeTab }) => {
                 <tbody>
                   {bloodbanks.map((bank) => (
                     <tr key={bank._id || bank.id} style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.05)', fontSize: '0.95rem' }}>
-                      <td style={{ padding: '16px', fontWeight: 600, color: 'var(--secondary)' }}>
+                      <td data-label="Bank Name" style={{ padding: '16px', fontWeight: 600, color: 'var(--secondary)' }}>
                         {bank.name || 'Storage Bank'}
                       </td>
-                      <td style={{ padding: '16px' }}>{bank.email}</td>
-                      <td style={{ padding: '16px', color: '#5b6a7e', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      <td data-label="Email" style={{ padding: '16px' }}>{bank.email}</td>
+                      <td data-label="Address" style={{ padding: '16px', color: '#5b6a7e', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {bank.address}
                       </td>
-                      <td style={{ padding: '16px' }}>{bank.phone}</td>
-                      <td style={{ padding: '16px', color: '#5b6a7e' }}>{bank.city}</td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Contact Phone" style={{ padding: '16px' }}>{bank.phone}</td>
+                      <td data-label="City" style={{ padding: '16px', color: '#5b6a7e' }}>{bank.city}</td>
+                      <td data-label="Status" style={{ padding: '16px' }}>
                         <span className={`status-chip ${bank.verified ? 'status-chip-active' : 'status-chip-pending'}`}>
                           {bank.verified ? 'Verified' : 'Pending'}
                         </span>
                       </td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Action" style={{ padding: '16px' }}>
                         {!bank.verified ? (
                           <button
                             onClick={() => handleVerify('bloodbank', bank._id || bank.id)}

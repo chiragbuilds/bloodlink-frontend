@@ -60,7 +60,7 @@ const Navbar = ({ onToggleSidebar }) => {
           
           <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--primary)' }}>
             <HeartPulse size={32} style={{ fill: 'rgba(183, 16, 42, 0.1)' }} />
-            <span style={{ 
+            <span className="navbar-logo-text" style={{ 
               fontFamily: 'var(--font-display)', 
               fontWeight: 800, 
               fontSize: '1.5rem', 
@@ -78,25 +78,25 @@ const Navbar = ({ onToggleSidebar }) => {
         <nav style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
           {!isAuthenticated ? (
             <>
-              <Link to="/login" className="btn btn-secondary" style={{ padding: '8px 20px', fontSize: '0.875rem' }}>
+              <Link to="/login" className="btn btn-secondary hide-on-mobile" style={{ padding: '8px 20px', fontSize: '0.875rem' }}>
                 Sign In
               </Link>
-              <Link to="/register" className="btn btn-primary" style={{ padding: '8px 20px', fontSize: '0.875rem' }}>
+              <Link to="/register" className="btn btn-primary navbar-action-btn">
                 Join Network
               </Link>
             </>
           ) : (
             <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-              <span className={`status-chip ${getRoleBadgeClass(role)}`} style={{ textTransform: 'uppercase' }}>
+              <span className={`status-chip ${getRoleBadgeClass(role)} navbar-role-badge`} style={{ textTransform: 'uppercase' }}>
                 {getRoleDisplayName(role)}
               </span>
               
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--secondary)' }}>
+              <div className="navbar-user-section" style={{ display: 'flex', alignItems: 'center', gap: '10px', color: 'var(--secondary)' }}>
                 <div style={{ 
                   width: '36px', 
                   height: '36px', 
                   borderRadius: '50%', 
-                  background: 'rgba(72, 95, 84, 0.1)', 
+                  background: 'rgba(72, 95, 132, 0.1)', 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center',
@@ -104,18 +104,18 @@ const Navbar = ({ onToggleSidebar }) => {
                 }}>
                   <User size={18} style={{ color: 'var(--secondary)' }} />
                 </div>
-                <span style={{ fontSize: '0.9rem', fontWeight: 600, display: 'none', md: 'block' }}>
+                <span className="navbar-user-name" style={{ fontSize: '0.9rem', fontWeight: 600 }}>
                   {user?.name || user?.hospitalName || user?.bloodBankName || user?.email || 'User'}
                 </span>
               </div>
 
               <button 
                 onClick={handleLogout}
-                className="btn btn-glass"
+                className="btn btn-glass navbar-logout-btn"
                 style={{ padding: '8px 16px', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '6px' }}
               >
                 <LogOut size={16} />
-                <span>Logout</span>
+                <span className="navbar-logout-text">Logout</span>
               </button>
             </div>
           )}

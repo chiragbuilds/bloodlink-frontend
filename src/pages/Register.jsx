@@ -122,7 +122,7 @@ const Register = () => {
         zIndex: -1
       }} />
 
-      <GlassCard style={{ width: '100%', maxWidth: '600px', padding: '40px 32px' }} className="animate-slide-up">
+      <GlassCard className="auth-card register-card animate-slide-up">
         <div style={{ textAlign: 'center', marginBottom: '32px' }}>
           <h2 style={{ fontFamily: 'var(--font-display)', color: 'var(--secondary)', marginBottom: '8px' }}>
             Register Account
@@ -133,41 +133,18 @@ const Register = () => {
         </div>
 
         {/* Role Picker */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '6px',
-          backgroundColor: '#edf2f4',
-          padding: '4px',
-          borderRadius: 'var(--radius-default)',
-          marginBottom: '32px'
-        }}>
+        <div className="role-picker-grid">
           {[
             { id: 'donor', label: 'Donor', icon: <Heart size={16} /> },
             { id: 'hospital', label: 'Hospital', icon: <Building size={16} /> },
-            { id: 'bloodbank', label: 'Blood Bank', icon: <Database size={16} /> },
+            { id: 'bloodbank', label: 'Bank', icon: <Database size={16} /> },
           ].map((type) => (
             <button
               key={type.id}
               type="button"
               onClick={() => handleRoleChange(type.id)}
               disabled={isSubmitting}
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '12px 8px',
-                border: 'none',
-                background: selectedRole === type.id ? '#ffffff' : 'transparent',
-                color: selectedRole === type.id ? 'var(--secondary)' : '#8fa0b5',
-                borderRadius: 'calc(var(--radius-default) - 2px)',
-                cursor: 'pointer',
-                fontSize: '0.8rem',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                transition: 'all var(--transition-fast)'
-              }}
+              className={selectedRole === type.id ? 'role-picker-btn active' : 'role-picker-btn'}
             >
               {type.icon}
               <span>{type.label}</span>

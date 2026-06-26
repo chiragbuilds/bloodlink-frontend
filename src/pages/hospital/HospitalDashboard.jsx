@@ -136,8 +136,8 @@ const HospitalDashboard = ({ activeTab, setActiveTab }) => {
       setIsSubmitting(true);
       setErrorMsg('');
       
-      // Endpoint: DELETE /api/hospital/:hospitalId/requests/:requestId
-      await api.delete(`/api/hospital/${id}/requests/${requestId}`);
+      // Endpoint: DELETE /api/requests/:requestId
+      await api.delete(`/api/requests/${requestId}`);
       
       setSuccessMsg('Request deleted successfully.');
       fetchRequests(); // reload list
@@ -264,8 +264,8 @@ const HospitalDashboard = ({ activeTab, setActiveTab }) => {
               <p>No blood supply requests have been recorded for this center.</p>
             </div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <div className="table-container">
+              <table className="responsive-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.1)', color: 'var(--secondary)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
                     <th style={{ padding: '12px 16px' }}>Request ID</th>
@@ -280,19 +280,19 @@ const HospitalDashboard = ({ activeTab, setActiveTab }) => {
                 <tbody>
                   {requests.map((req) => (
                     <tr key={req._id || req.id} style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.05)', fontSize: '0.95rem' }}>
-                      <td style={{ padding: '16px', fontFamily: 'monospace', fontSize: '0.85rem', color: '#8fa0b5' }}>
+                      <td data-label="Request ID" style={{ padding: '16px', fontFamily: 'monospace', fontSize: '0.85rem', color: '#8fa0b5' }}>
                         {(req._id || req.id).substring(0, 8).toUpperCase()}...
                       </td>
-                      <td style={{ padding: '16px', fontWeight: 700, color: 'var(--primary)' }}>
+                      <td data-label="Blood Group" style={{ padding: '16px', fontWeight: 700, color: 'var(--primary)' }}>
                         {req.bloodGroup}
                       </td>
-                      <td style={{ padding: '16px' }}>{req.unitsRequired} Units</td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Volume" style={{ padding: '16px' }}>{req.unitsRequired} Units</td>
+                      <td data-label="Priority" style={{ padding: '16px' }}>
                         <span className={`status-chip ${req.priority === 'critical' ? 'status-chip-critical' : 'status-chip-pending'}`}>
                           {req.priority || 'Normal'}
                         </span>
                       </td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Status" style={{ padding: '16px' }}>
                         <span className={`status-chip ${
                           req.status === 'Completed' || req.status === 'completed' ? 'status-chip-active' :
                           req.status === 'Accepted' || req.status === 'accepted' ? 'status-chip-info' :
@@ -301,10 +301,10 @@ const HospitalDashboard = ({ activeTab, setActiveTab }) => {
                           {req.status}
                         </span>
                       </td>
-                      <td style={{ padding: '16px', color: '#5b6a7e', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      <td data-label="Details" style={{ padding: '16px', color: '#5b6a7e', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                         {req.reason || '-'}
                       </td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Action" style={{ padding: '16px' }}>
                         {req.status === 'Pending' || req.status === 'pending' ? (
                           <button
                             onClick={() => handleCancelRequest(req._id || req.id)}

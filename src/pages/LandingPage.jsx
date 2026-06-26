@@ -89,7 +89,7 @@ const LandingPage = () => {
           </div>
           
           <h1 className="display-lg" style={{ color: 'var(--secondary)', marginBottom: '24px' }}>
-            Bridging the gap between <br />
+            Bridging the gap between <br className="hide-on-mobile" />
             <span style={{ 
               background: 'linear-gradient(135deg, var(--primary) 30%, var(--secondary) 100%)',
               WebkitBackgroundClip: 'text',
@@ -102,7 +102,7 @@ const LandingPage = () => {
           </p>
 
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/register" className="btn btn-glass" style={{ padding: '14px 32px', fontSize: '1rem', border: '2px solid var(--secondary)', fontWeight: 600 }}>
+            <Link to="/register" className="btn btn-glass landing-hero-btn">
               Connect with BloodLink
             </Link>
             {/* <Link to="/login" className="btn btn-secondary" style={{ padding: '14px 32px', fontSize: '1rem' }}>

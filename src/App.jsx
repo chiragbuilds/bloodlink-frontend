@@ -14,7 +14,7 @@ import AdminDashboard from './pages/admin/AdminDashboard';
 import AdminLogin from './pages/admin/AdminLogin';
 
 const AppContent = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, role } = useAuth();
   
   // Tab states for all dashboard workspaces
   const [donorTab, setDonorTab] = useState('overview');
@@ -23,7 +23,31 @@ const AppContent = () => {
   const [adminTab, setAdminTab] = useState('stats');
 
   // Sidebar visibility drawer toggle
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(window.innerWidth > 768);
+
+  const handleTabChange = (tabSetter) => (tab) => {
+    tabSetter(tab);
+    if (window.innerWidth <= 768) {
+      setSidebarOpen(false);
+    }
+  };
+
+  const getSidebarProps = () => {
+    switch (role) {
+      case 'donor':
+        return { activeTab: donorTab, setActiveTab: handleTabChange(setDonorTab) };
+      case 'hospital':
+        return { activeTab: hospitalTab, setActiveTab: handleTabChange(setHospitalTab) };
+      case 'bloodbank':
+        return { activeTab: bloodBankTab, setActiveTab: handleTabChange(setBloodBankTab) };
+      case 'admin':
+        return { activeTab: adminTab, setActiveTab: handleTabChange(setAdminTab) };
+      default:
+        return null;
+    }
+  };
+
+  const sidebarProps = getSidebarProps();
 
   return (
     <Router>
@@ -31,10 +55,20 @@ const AppContent = () => {
         {/* Public Routes */}
         <Route path="/" element={
           <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <Navbar />
-            <main style={{ flex: 1 }}>
-              <LandingPage />
-            </main>
+            <Navbar onToggleSidebar={isAuthenticated ? () => setSidebarOpen(!sidebarOpen) : undefined} />
+            {isAuthenticated && sidebarProps ? (
+              <div className="dashboard-layout">
+                {sidebarOpen && <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />}
+                <Sidebar isOpen={sidebarOpen} {...sidebarProps} />
+                <main className="dashboard-main-content">
+                  <LandingPage />
+                </main>
+              </div>
+            ) : (
+              <main style={{ flex: 1 }}>
+                <LandingPage />
+              </main>
+            )}
           </div>
         } />
         
@@ -61,9 +95,10 @@ const AppContent = () => {
           <ProtectedRoute allowedRoles={['donor']}>
             <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
               <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-              <div style={{ display: 'flex', flex: 1, alignItems: 'stretch' }}>
-                <Sidebar isOpen={sidebarOpen} activeTab={donorTab} setActiveTab={setDonorTab} />
-                <main style={{ flex: 1, padding: '40px var(--gutter)', overflowY: 'auto' }}>
+              <div className="dashboard-layout">
+                {sidebarOpen && <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />}
+                <Sidebar isOpen={sidebarOpen} activeTab={donorTab} setActiveTab={handleTabChange(setDonorTab)} />
+                <main className="dashboard-main-content">
                   <div className="container" style={{ paddingLeft: 0, paddingRight: 0 }}>
                     <DonorDashboard activeTab={donorTab} />
                   </div>
@@ -78,9 +113,10 @@ const AppContent = () => {
           <ProtectedRoute allowedRoles={['hospital']}>
             <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
               <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-              <div style={{ display: 'flex', flex: 1, alignItems: 'stretch' }}>
-                <Sidebar isOpen={sidebarOpen} activeTab={hospitalTab} setActiveTab={setHospitalTab} />
-                <main style={{ flex: 1, padding: '40px var(--gutter)', overflowY: 'auto' }}>
+              <div className="dashboard-layout">
+                {sidebarOpen && <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />}
+                <Sidebar isOpen={sidebarOpen} activeTab={hospitalTab} setActiveTab={handleTabChange(setHospitalTab)} />
+                <main className="dashboard-main-content">
                   <div className="container" style={{ paddingLeft: 0, paddingRight: 0 }}>
                     <HospitalDashboard activeTab={hospitalTab} setActiveTab={setHospitalTab} />
                   </div>
@@ -95,9 +131,10 @@ const AppContent = () => {
           <ProtectedRoute allowedRoles={['bloodbank']}>
             <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
               <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-              <div style={{ display: 'flex', flex: 1, alignItems: 'stretch' }}>
-                <Sidebar isOpen={sidebarOpen} activeTab={bloodBankTab} setActiveTab={setBloodBankTab} />
-                <main style={{ flex: 1, padding: '40px var(--gutter)', overflowY: 'auto' }}>
+              <div className="dashboard-layout">
+                {sidebarOpen && <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />}
+                <Sidebar isOpen={sidebarOpen} activeTab={bloodBankTab} setActiveTab={handleTabChange(setBloodBankTab)} />
+                <main className="dashboard-main-content">
                   <div className="container" style={{ paddingLeft: 0, paddingRight: 0 }}>
                     <BloodBankDashboard activeTab={bloodBankTab} />
                   </div>
@@ -114,9 +151,10 @@ const AppContent = () => {
           <ProtectedRoute allowedRoles={['admin']}>
             <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
               <Navbar onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-              <div style={{ display: 'flex', flex: 1, alignItems: 'stretch' }}>
-                <Sidebar isOpen={sidebarOpen} activeTab={adminTab} setActiveTab={setAdminTab} />
-                <main style={{ flex: 1, padding: '40px var(--gutter)', overflowY: 'auto' }}>
+              <div className="dashboard-layout">
+                {sidebarOpen && <div className="sidebar-backdrop" onClick={() => setSidebarOpen(false)} />}
+                <Sidebar isOpen={sidebarOpen} activeTab={adminTab} setActiveTab={handleTabChange(setAdminTab)} />
+                <main className="dashboard-main-content">
                   <div className="container" style={{ paddingLeft: 0, paddingRight: 0 }}>
                     <AdminDashboard activeTab={adminTab} />
                   </div>

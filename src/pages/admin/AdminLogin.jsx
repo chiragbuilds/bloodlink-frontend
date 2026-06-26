@@ -31,124 +31,103 @@ const AdminLogin = () => {
   };
   
   return (
-    // <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-    //       <div className="input-group">
-    //         <label className="input-label" htmlFor="admin-id-input">Admin ID</label>
-    //         <input
-    //           id="email-input"
-    //           type="text"
-    //           placeholder="e.g. nurse.smith@hospital.org"
-    //           value={AdminID}
-    //           onChange={(e) => setAdminID(e.target.value)}
-    //           className="input-field"
-    //           required
-    //         />
-    //       </div>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '40px 20px',
+      position: 'relative'
+    }}>
+      {/* Background gradients */}
+      <div style={{
+        position: 'absolute',
+        top: '20%',
+        left: '25%',
+        width: '250px',
+        height: '250px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(183, 16, 42, 0.05) 0%, rgba(255, 255, 255, 0) 70%)',
+        zIndex: -1
+      }} />
+      <div style={{
+        position: 'absolute',
+        bottom: '20%',
+        right: '25%',
+        width: '300px',
+        height: '300px',
+        borderRadius: '50%',
+        background: 'radial-gradient(circle, rgba(72, 95, 132, 0.05) 0%, rgba(255, 255, 255, 0) 70%)',
+        zIndex: -1
+      }} />
 
-    //       <div className="input-group">
-    //         <label className="input-label" htmlFor="password-input">Password</label>
-    //         <input
-    //           id="password-input"
-    //           type="password"
-    //           placeholder="••••••••"
-    //           value={password}
-    //           onChange={(e) => setPassword(e.target.value)}
-    //           className="input-field"
-    //           required
-    //         />
-    //       </div>
+      <div className="glass-card" style={{ width: '100%', maxWidth: '440px', padding: '40px 32px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <h2 style={{ fontFamily: 'var(--font-display)', color: 'var(--secondary)', marginBottom: '8px' }}>
+            System Administrator
+          </h2>
+          <p style={{ color: '#8fa0b5', fontSize: '0.9rem' }}>
+            Secure Portal Verification
+          </p>
+        </div>
 
-    //       <button
-    //         type="submit"
-    //         className="btn btn-primary"
-    //         style={{ width: '100%', padding: '14px', marginTop: '8px' }}
-    //       >
-    //       </button>
-    //     </form>
-    <form 
-  onSubmit={handleSubmit} 
-  style={{ 
-    display: 'flex', 
-    flexDirection: 'column', 
-    gap: '20px', 
-    maxWidth: '400px', 
-    margin: '0 auto',
-    fontFamily: 'sans-serif'
-  }}
->
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'left' }}>
-    <label 
-      htmlFor="admin-id-input"
-      style={{ fontSize: '14px', fontWeight: '600', color: '#374151' }}
-    >
-      Admin ID
-    </label>
-    <input
-      id="admin-id-input"
-      type="text"
-      placeholder="enter your admin ID"
-      value={AdminID}
-      onChange={(e) => setAdminID(e.target.value)}
-      required
-      style={{
-        padding: '12px 16px',
-        fontSize: '16px',
-        border: '1px solid #d1d5db',
-        borderRadius: '6px',
-        backgroundColor: '#ffffff',
-        color: '#111827',
-        outline: 'none'
-      }}
-    />
-  </div>
+        <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          <div className="input-group">
+            <label className="input-label" htmlFor="admin-id-input">Admin ID</label>
+            <input
+              id="admin-id-input"
+              type="text"
+              placeholder="Enter your administrative key"
+              value={AdminID}
+              onChange={(e) => setAdminID(e.target.value)}
+              className="input-field"
+              required
+              disabled={isSubmitting}
+            />
+          </div>
 
-  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'left' }}>
-    <label 
-      htmlFor="password-input"
-      style={{ fontSize: '14px', fontWeight: '600', color: '#374151' }}
-    >
-      Password
-    </label>
-    <input
-      id="password-input"
-      type="password"
-      placeholder="••••••••"
-      value={password}
-      onChange={(e) => setPassword(e.target.value)}
-      required
-      style={{
-        padding: '12px 16px',
-        fontSize: '16px',
-        border: '1px solid #d1d5db',
-        borderRadius: '6px',
-        backgroundColor: '#ffffff',
-        color: '#111827',
-        outline: 'none'
-      }}
-    />
-  </div>
+          <div className="input-group">
+            <label className="input-label" htmlFor="password-input">Security Password</label>
+            <input
+              id="password-input"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="input-field"
+              required
+              disabled={isSubmitting}
+            />
+          </div>
 
-  <button
-    type="submit"
-    style={{ 
-      width: '100%', 
-      padding: '14px', 
-      marginTop: '8px',
-      backgroundColor: '#2563eb',
-      color: '#ffffff',
-      fontSize: '16px',
-      fontWeight: '600',
-      border: 'none',
-      borderRadius: '6px',
-      cursor: 'pointer'
-    }}
-  >
-    Sign In
-  </button>
-  <div className="">
-    {error.length > 0 ? error : null}
-  </div>
-</form>
-  )
-}
+          <button
+            type="submit"
+            className="btn btn-primary"
+            style={{ width: '100%', padding: '14px', marginTop: '8px' }}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? 'Authenticating Access...' : 'Authenticate Access'}
+          </button>
+        </form>
+
+        {error && (
+          <div style={{
+            backgroundColor: 'rgba(186, 26, 26, 0.08)',
+            border: '1px solid rgba(186, 26, 26, 0.2)',
+            color: 'var(--error)',
+            padding: '12px 16px',
+            borderRadius: 'var(--radius-default)',
+            fontSize: '0.85rem',
+            fontWeight: 500,
+            marginTop: '20px',
+            textAlign: 'center'
+          }}>
+            {error}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 export default AdminLogin;

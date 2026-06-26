@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { 
   Activity, 
@@ -14,8 +15,15 @@ import {
 
 const Sidebar = ({ isOpen, activeTab, setActiveTab }) => {
   const { role } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  if (!isOpen) return null;
+  const handleLinkClick = (tab, path) => {
+    setActiveTab(tab);
+    if (location.pathname !== path) {
+      navigate(path);
+    }
+  };
 
   const renderNavLinks = () => {
     switch (role) {
@@ -23,21 +31,21 @@ const Sidebar = ({ isOpen, activeTab, setActiveTab }) => {
         return (
           <>
             <button 
-              onClick={() => setActiveTab('overview')}
+              onClick={() => handleLinkClick('overview', '/donor-dashboard')}
               className={`sidebar-link ${activeTab === 'overview' ? 'active' : ''}`}
             >
               <Activity size={18} />
               <span>Availability & Stats</span>
             </button>
             <button 
-              onClick={() => setActiveTab('requests')}
+              onClick={() => handleLinkClick('requests', '/donor-dashboard')}
               className={`sidebar-link ${activeTab === 'requests' ? 'active' : ''}`}
             >
               <Droplet size={18} />
               <span>Blood Requests</span>
             </button>
             <button 
-              onClick={() => setActiveTab('profile')}
+              onClick={() => handleLinkClick('profile', '/donor-dashboard')}
               className={`sidebar-link ${activeTab === 'profile' ? 'active' : ''}`}
             >
               <Settings size={18} />
@@ -49,21 +57,21 @@ const Sidebar = ({ isOpen, activeTab, setActiveTab }) => {
         return (
           <>
             <button 
-              onClick={() => setActiveTab('requests')}
+              onClick={() => handleLinkClick('requests', '/hospital-dashboard')}
               className={`sidebar-link ${activeTab === 'requests' ? 'active' : ''}`}
             >
               <ClipboardList size={18} />
               <span>My Requests</span>
             </button>
             <button 
-              onClick={() => setActiveTab('new-request')}
+              onClick={() => handleLinkClick('new-request', '/hospital-dashboard')}
               className={`sidebar-link ${activeTab === 'new-request' ? 'active' : ''}`}
             >
               <PlusCircle size={18} />
               <span>Request Blood</span>
             </button>
             <button 
-              onClick={() => setActiveTab('profile')}
+              onClick={() => handleLinkClick('profile', '/hospital-dashboard')}
               className={`sidebar-link ${activeTab === 'profile' ? 'active' : ''}`}
             >
               <Settings size={18} />
@@ -75,28 +83,28 @@ const Sidebar = ({ isOpen, activeTab, setActiveTab }) => {
         return (
           <>
             <button 
-              onClick={() => setActiveTab('inventory')}
+              onClick={() => handleLinkClick('inventory', '/bloodbank-dashboard')}
               className={`sidebar-link ${activeTab === 'inventory' ? 'active' : ''}`}
             >
               <Database size={18} />
               <span>Blood Stocks</span>
             </button>
             <button 
-              onClick={() => setActiveTab('requests')}
+              onClick={() => handleLinkClick('requests', '/bloodbank-dashboard')}
               className={`sidebar-link ${activeTab === 'requests' ? 'active' : ''}`}
             >
               <Droplet size={18} />
               <span>Matched Requests</span>
             </button>
             <button 
-              onClick={() => setActiveTab('accepted')}
+              onClick={() => handleLinkClick('accepted', '/bloodbank-dashboard')}
               className={`sidebar-link ${activeTab === 'accepted' ? 'active' : ''}`}
             >
               <ClipboardList size={18} />
               <span>Accepted Escorts</span>
             </button>
             <button 
-              onClick={() => setActiveTab('profile')}
+              onClick={() => handleLinkClick('profile', '/bloodbank-dashboard')}
               className={`sidebar-link ${activeTab === 'profile' ? 'active' : ''}`}
             >
               <Settings size={18} />
@@ -108,28 +116,28 @@ const Sidebar = ({ isOpen, activeTab, setActiveTab }) => {
         return (
           <>
             <button 
-              onClick={() => setActiveTab('stats')}
+              onClick={() => handleLinkClick('stats', '/admin-dashboard')}
               className={`sidebar-link ${activeTab === 'stats' ? 'active' : ''}`}
             >
               <Activity size={18} />
               <span>Global Overview</span>
             </button>
             <button 
-              onClick={() => setActiveTab('donors')}
+              onClick={() => handleLinkClick('donors', '/admin-dashboard')}
               className={`sidebar-link ${activeTab === 'donors' ? 'active' : ''}`}
             >
               <Heart size={18} />
               <span>Verify Donors</span>
             </button>
             <button 
-              onClick={() => setActiveTab('hospitals')}
+              onClick={() => handleLinkClick('hospitals', '/admin-dashboard')}
               className={`sidebar-link ${activeTab === 'hospitals' ? 'active' : ''}`}
             >
               <Building size={18} />
               <span>Verify Hospitals</span>
             </button>
             <button 
-              onClick={() => setActiveTab('bloodbanks')}
+              onClick={() => handleLinkClick('bloodbanks', '/admin-dashboard')}
               className={`sidebar-link ${activeTab === 'bloodbanks' ? 'active' : ''}`}
             >
               <Database size={18} />
@@ -143,19 +151,20 @@ const Sidebar = ({ isOpen, activeTab, setActiveTab }) => {
   };
 
   return (
-    <aside style={{
-      width: '260px',
-      flexShrink: 0,
-      background: 'rgba(255, 255, 255, 0.65)',
-      borderRight: '1px solid rgba(255, 255, 255, 0.4)',
-      backdropFilter: 'saturate(180%) blur(20px)',
-      WebkitBackdropFilter: 'saturate(180%) blur(20px)',
-      padding: '24px 16px',
-      display: 'flex',
-      flexDirection: 'column',
-      gap: '8px',
-      alignSelf: 'stretch'
-    }}>
+    <aside 
+      className={`dashboard-sidebar ${isOpen ? 'open' : 'closed'}`}
+      style={{
+        background: 'rgba(255, 255, 255, 0.65)',
+        borderRight: '1px solid rgba(255, 255, 255, 0.4)',
+        backdropFilter: 'saturate(180%) blur(20px)',
+        WebkitBackdropFilter: 'saturate(180%) blur(20px)',
+        padding: '24px 16px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '8px',
+        alignSelf: 'stretch'
+      }}
+    >
       <style>{`
         .sidebar-link {
           display: flex;

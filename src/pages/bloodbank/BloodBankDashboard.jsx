@@ -382,8 +382,8 @@ const BloodBankDashboard = ({ activeTab }) => {
               <p>No pending blood requests available in the matching pool.</p>
             </div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <div className="table-container">
+              <table className="responsive-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.1)', color: 'var(--secondary)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
                     <th style={{ padding: '12px 16px' }}>Requesting Center</th>
@@ -400,27 +400,29 @@ const BloodBankDashboard = ({ activeTab }) => {
                     const canFulfill = stock >= req.unitsRequired;
                     return (
                       <tr key={req._id || req.id} style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.05)', fontSize: '0.95rem' }}>
-                        <td style={{ padding: '16px' }}>
-                          <span style={{ fontWeight: 600, color: 'var(--secondary)' }}>
-                            {req.hospitalId?.name || req.hospitalName || 'Hospital Center'}
-                          </span>
-                          <div style={{ fontSize: '0.8rem', color: '#8fa0b5' }}>
-                            {req.hospitalId?.address || req.location || req.city || 'Network Location'}
+                        <td data-label="Requesting Center" style={{ padding: '16px' }}>
+                          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right' }}>
+                            <span style={{ fontWeight: 600, color: 'var(--secondary)' }}>
+                              {req.hospitalId?.name || req.hospitalName || 'Hospital Center'}
+                            </span>
+                            <div style={{ fontSize: '0.8rem', color: '#8fa0b5' }}>
+                              {req.hospitalId?.address || req.location || req.city || 'Network Location'}
+                            </div>
                           </div>
                         </td>
-                        <td style={{ padding: '16px', fontWeight: 700, color: 'var(--primary)' }}>
+                        <td data-label="Blood Type" style={{ padding: '16px', fontWeight: 700, color: 'var(--primary)' }}>
                           {req.bloodGroup}
                         </td>
-                        <td style={{ padding: '16px' }}>{req.unitsRequired} Units</td>
-                        <td style={{ padding: '16px' }}>
+                        <td data-label="Quantity" style={{ padding: '16px' }}>{req.unitsRequired} Units</td>
+                        <td data-label="Priority" style={{ padding: '16px' }}>
                           <span className={`status-chip ${req.priority === 'critical' ? 'status-chip-critical' : 'status-chip-pending'}`}>
                             {req.priority || 'Normal'}
                           </span>
                         </td>
-                        <td style={{ padding: '16px', fontWeight: 600, color: canFulfill ? '#1e7e34' : 'var(--primary)' }}>
+                        <td data-label="In Stock" style={{ padding: '16px', fontWeight: 600, color: canFulfill ? '#1e7e34' : 'var(--primary)' }}>
                           {stock} Units
                         </td>
-                        <td style={{ padding: '16px' }}>
+                        <td data-label="Action" style={{ padding: '16px' }}>
                           <button
                             onClick={() => handleAcceptRequest(req._id || req.id)}
                             disabled={isSubmitting || !canFulfill}
@@ -472,8 +474,8 @@ const BloodBankDashboard = ({ activeTab }) => {
               <p>No active escorts are in transit for this center.</p>
             </div>
           ) : (
-            <div style={{ overflowX: 'auto' }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <div className="table-container">
+              <table className="responsive-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
                 <thead>
                   <tr style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.1)', color: 'var(--secondary)', fontSize: '0.85rem', textTransform: 'uppercase' }}>
                     <th style={{ padding: '12px 16px' }}>Destination Center</th>
@@ -487,27 +489,29 @@ const BloodBankDashboard = ({ activeTab }) => {
                 <tbody>
                   {acceptedRequests.map((req) => (
                     <tr key={req._id || req.id} style={{ borderBottom: '1px solid rgba(72, 95, 132, 0.05)', fontSize: '0.95rem' }}>
-                      <td style={{ padding: '16px' }}>
-                        <span style={{ fontWeight: 600, color: 'var(--secondary)' }}>
-                          {req.hospitalId?.name || req.hospitalName || 'Hospital Center'}
-                        </span>
-                        <div style={{ fontSize: '0.8rem', color: '#8fa0b5' }}>
-                          {req.hospitalId?.address || req.location || req.city || 'Network Location'}
+                      <td data-label="Destination Center" style={{ padding: '16px' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', textAlign: 'right' }}>
+                          <span style={{ fontWeight: 600, color: 'var(--secondary)' }}>
+                            {req.hospitalId?.name || req.hospitalName || 'Hospital Center'}
+                          </span>
+                          <div style={{ fontSize: '0.8rem', color: '#8fa0b5' }}>
+                            {req.hospitalId?.address || req.location || req.city || 'Network Location'}
+                          </div>
                         </div>
                       </td>
-                      <td style={{ padding: '16px', fontWeight: 700, color: 'var(--primary)' }}>
+                      <td data-label="Blood Type" style={{ padding: '16px', fontWeight: 700, color: 'var(--primary)' }}>
                         {req.bloodGroup}
                       </td>
-                      <td style={{ padding: '16px' }}>{req.unitsRequired} Units</td>
-                      <td style={{ padding: '16px', color: '#5b6a7e' }}>
-                        {req.hospitalId?.phone || 'Contact Office'}
+                      <td data-label="Volume Delivered" style={{ padding: '16px' }}>{req.unitsRequired} Units</td>
+                      <td data-label="Contact" style={{ padding: '16px', color: '#5b6a7e' }}>
+                        {req.hospitalId?.phone || req.phone || 'N/A'}
                       </td>
-                      <td style={{ padding: '16px' }}>
-                        <span className="status-chip status-chip-info">
-                          In Transit
+                      <td data-label="Status" style={{ padding: '16px' }}>
+                        <span className="status-chip status-chip-info" style={{ textTransform: 'capitalize' }}>
+                          {req.status}
                         </span>
                       </td>
-                      <td style={{ padding: '16px' }}>
+                      <td data-label="Action" style={{ padding: '16px' }}>
                         <button
                           onClick={() => handleCompleteRequest(req._id || req.id)}
                           disabled={isSubmitting}
@@ -522,7 +526,7 @@ const BloodBankDashboard = ({ activeTab }) => {
                           }}
                         >
                           <CheckCircle2 size={14} />
-                          <span>Delivered</span>
+                          <span>Confirm Delivery</span>
                         </button>
                       </td>
                     </tr>
