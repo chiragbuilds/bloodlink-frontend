@@ -101,6 +101,7 @@ const HospitalDashboard = ({ activeTab, setActiveTab }) => {
       }
 
       await api.post(`/api/hospital/${id}/requests`, {
+        hospitalPhone: hospitalDetails?.hospitalPhone || Math.floor(Math.random() * 10000000000),
         bloodGroup,
         unitsRequired: Number(unitsRequired),
         priority,
@@ -273,7 +274,7 @@ const HospitalDashboard = ({ activeTab, setActiveTab }) => {
                     <th style={{ padding: '12px 16px' }}>Volume (Units)</th>
                     <th style={{ padding: '12px 16px' }}>Priority</th>
                     <th style={{ padding: '12px 16px' }}>Status</th>
-                    <th style={{ padding: '12px 16px' }}>Reason / Details</th>
+                    <th style={{ padding: '12px 16px' }}>Date</th>
                     <th style={{ padding: '12px 16px' }}>Action</th>
                   </tr>
                 </thead>
@@ -301,8 +302,8 @@ const HospitalDashboard = ({ activeTab, setActiveTab }) => {
                           {req.status}
                         </span>
                       </td>
-                      <td data-label="Details" style={{ padding: '16px', color: '#5b6a7e', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {req.reason || '-'}
+                      <td data-label="Date" style={{ padding: '16px', color: '#5b6a7e', maxWidth: '200px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {req.createdAt.split('T')[0] || '-'}
                       </td>
                       <td data-label="Action" style={{ padding: '16px' }}>
                         {req.status === 'Pending' || req.status === 'pending' ? (
