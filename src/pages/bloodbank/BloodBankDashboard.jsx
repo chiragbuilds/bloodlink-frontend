@@ -506,7 +506,7 @@ const BloodBankDashboard = ({ activeTab }) => {
                       </td>
                       <td data-label="Volume Delivered" style={{ padding: '16px' }}>{req.unitsRequired} Units</td>
                       <td data-label="Contact" style={{ padding: '16px', color: '#5b6a7e' }}>
-                        {req.hospitalId?.phone || req.phone || 'N/A'}
+                        {req.hospitalId?.hospitalPhone || req.hospitalPhone || 'N/A'}
                       </td>
                       <td data-label="Status" style={{ padding: '16px' }}>
                         <span className="status-chip status-chip-info" style={{ textTransform: 'capitalize' }}>
